@@ -1,78 +1,91 @@
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Home, Task as TaskIcon, ExitToApp, Menu, Add } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 import DarkModeToggle from '../components/DarkModeToggle';
+import AddTaskModal from '../pages/addList'; 
 
-export default function Task() {
-  const [profileImage, setProfileImage] = useState(null);
+function Task() {
   const [darkMode, setDarkMode] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false); // For the modal
 
-  // Use effect to apply dark mode class to the root element
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [darkMode]);
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setProfileImage(imageUrl);
-    }
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
   };
 
-  return (
-    <div className={`flex flex-col md:flex-row`}>
-      {/* Sidebar */}
-      <div className={`p-7 border-b-2 md:border-r-2 md:min-h-screen ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
-        <form className="flex flex-col gap-8">
-          {/* Dark Mode Toggle */}
-          <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
 
-          {/* Profile Section */}
-          <div className="flex items-center gap-4">
-            <div className="w-20 h-20 rounded-full bg-black p-1">
-            <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className='hidden'
-            
-          />
-              <img
-                src={profileImage || "default-profile-image-url"} // Replace with your default profile image URL
-                alt="Profile"
-                className="w-full h-full rounded-full object-cover"
-                
-              />
+  return (
+    <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      <div className="flex">
+        {/* Sidebar */}
+        <div className={`fixed md:relative w-64 h-full bg-gray-200 transition-transform duration-300 z-50 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
+          <div className={`p-7 h-auto border-b-2 md:border-none ${darkMode ? 'bg-gray-800' : 'bg-gray-200'}`}>
+            <div className='flex items-center justify-between'>
+              <h2 className="text-2xl font-bold">Taskify</h2>
+              <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
             </div>
-            <span className="font-semibold text-lg">Your Username</span> {/* Replace with the actual username */}
-           
+            <div className='flex flex-col mt-9'>
+              <Link to="/" className={`flex items-center space-x-2 hover:bg-gray-700 p-2 rounded ${darkMode ? 'text-white hover:bg-gray-600' : 'text-black'}`}>
+                <Home />
+                <span>All Tasks</span>
+              </Link>
+
+              <Link to="/pending" className={`flex items-center space-x-2 hover:bg-gray-700 p-2 rounded mt-6 ${darkMode ? 'text-white hover:bg-gray-600' : 'text-black'}`}>
+                <TaskIcon />
+                <span>Pending</span>
+              </Link>
+
+              <Link to="/completed" className={`flex items-center space-x-2 hover:bg-gray-700 p-2 rounded mt-6 ${darkMode ? 'text-white hover:bg-gray-600' : 'text-black'}`}>
+                <TaskIcon />
+                <span>Completed</span>
+              </Link>
+
+              <Link to="/important" className={`flex items-center space-x-2 hover:bg-gray-700 p-2 rounded mt-6 ${darkMode ? 'text-white hover:bg-gray-600' : 'text-black'}`}>
+                <TaskIcon />
+                <span>Important</span>
+              </Link>
+
+              {/* Add large margin to push the 'Sign Out' to the bottom */}
+              <div className="flex-1 mt-60"></div>
+
+              <Link to="/signout" className={`flex items-center space-x-2 hover:bg-gray-700 p-2 rounded mt-12 ${darkMode ? 'text-white hover:bg-gray-600' : 'text-black'}`}>
+                <ExitToApp />
+                <span>Sign Out</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className={`flex-1 p-4 transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-0'} md:ml-0`}>
+          <div className="flex justify-between items-center">
+            {/* Sidebar Toggle Button */}
+            <button onClick={toggleSidebar} className={`md:hidden p-2 bg-transparent text-white rounded flex items-center`}>
+              <Menu className="mr-2" />
+            </button>
+
+            {/* Add Task Button */}
+            <button
+              onClick={handleModalOpen}
+              className={`flex items-center space-x-2 p-2 bg-transparenttext-white rounded hover:bg-transparent`}
+            >
+              
+              <AddTaskModal open={modalOpen} handleClose={handleModalClose} />
+            </button>
           </div>
 
-          {/* Task Buttons */}
-          <button className={`p-3 rounded-lg uppercase hover:opacity-95 ${darkMode ? 'bg-orange-700 text-white' : 'bg-orange-900 text-white'}`}>
-            ALL TASK
-          </button>
-          <button className={`p-3 rounded-lg uppercase hover:opacity-95 ${darkMode ? 'bg-orange-600 text-white' : 'bg-orange-800 text-white'}`}>
-            COMPLETED
-          </button>
-          <button className={`p-3 rounded-lg uppercase hover:opacity-95 ${darkMode ? 'bg-orange-700 text-white' : 'bg-orange-900 text-white'}`}>
-            PENDING
-          </button>
-        </form>
-      </div>
+          {/* Task List or Content goes here */}
+          {/* You can render the tasks based on the route or task state */}
 
-      {/* Task List */}
-      <div className={`flex-1 ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-        <h1 className="text-3xl font-semibold border-b p-3 mt-5">
-          Task:
-        </h1>
-        <div className="p-7 flex flex-wrap gap-4">
-          {/* Add task list components here */}
         </div>
       </div>
+
+      
+     
     </div>
   );
 }
+
+export default Task;

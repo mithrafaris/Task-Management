@@ -47,7 +47,7 @@ const SignUp = () => {
     <div className="flex flex-col justify-center items-center w-full h-[100vh] bg-[#282D2D] px-5">
       <div className=" flex flex-col items-end justify-start  overflow-hidden mb-2 xl:max-w-3xl w-full">
         <div className="flex">
-          <h3 className="text-white">Dark Mode : &nbsp;</h3>
+          <h3 className="text-white"> &nbsp;</h3>
           <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
         </div>
       </div>
@@ -106,6 +106,7 @@ const SignUp = () => {
               required
             />
             </div>
+            
           <div>
             <button
             disabled={loading}
@@ -133,7 +134,7 @@ const SignUp = () => {
             
         
             <p className="mt-6 text-xs text-gray-600 text-center">
-              Already have an account?{" "}
+            Have an account?{" "}
               <Link to="/sign-in">
               <span className="text-[#E9522C] font-semibold">Login</span>
             </Link>

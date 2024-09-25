@@ -14,9 +14,9 @@ const TaskSchema = new mongoose.Schema({
     enum: ["pending", "progress", "completed"],
     default: "pending",
   },
-  userRef: {
-    type: String,
-    required: true
+  date:{
+    type: Date,
+    required: true,
   }
 }, { timestamps: true });
 

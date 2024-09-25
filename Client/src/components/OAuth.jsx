@@ -31,7 +31,7 @@ function OAuth() {
 
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate('/');
+        navigate('/Task');
       } else {
         console.error('Google sign-in failed', data);
       }

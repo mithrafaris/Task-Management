@@ -2,25 +2,15 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import DarkModeToggle from "../components/DarkModeToggle"; 
 import Tasky from '../assets/tasky.png';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Paper } from '@mui/material'; 
-import Draggable from 'react-draggable';
 
 
-function PaperComponent(props) {
-  return (
-    <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
-      <Paper {...props} />
-    </Draggable>
-  );
-}
 
 export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
+ 
 
   const toggleDarkMode = () => setDarkMode(prev => !prev);
-  const handleOpenModal = () => setOpenModal(true); 
-  const handleCloseModal = () => setOpenModal(false); 
+
 
   return (
     <div className={darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-800"}>
@@ -62,12 +52,11 @@ export default function Home() {
               <h2 className="text-4xl font-bold sm:text-5xl">
                 Taskify & TaskMaster
               </h2>
-              <button 
-                className="inline-flex text-white items-center px-6 py-3 font-medium bg-orange-700 rounded-lg hover:opacity-75"
-                onClick={handleOpenModal} // Open modal on click
+              <span
+                className="inline-flex text-white items-center px-6 py-3 font-medium hover:opacity-75"
               >
-                &nbsp;  Add your Task
-              </button>
+                &nbsp;  Let's Start
+              </span>
             </div>
           </div>
           <div className="absolute inset-0 w-full sm:my-20 sm:pt-1 pt-12 h-full ">
@@ -82,45 +71,8 @@ export default function Home() {
         <h1 className="text-center text-2xl sm:text-5xl py-10 font-medium">"Your task list is a roadmap to success!"</h1>
      
 
-      {/* Task Modal */}
-      <Dialog
-        open={openModal}
-        onClose={handleCloseModal}
-        PaperComponent={PaperComponent} // Make the dialog draggable
-        aria-labelledby="draggable-dialog-title"
-      >
-        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          Add New Task
-        </DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Task Title"
-            type="text"
-            fullWidth
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            type="Date"
-            fullWidth
-          />
-          <TextField
-            margin="dense"
-            label="Task Description"
-            type="text"
-            fullWidth
-            multiline
-            rows={4}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal} sx={{ color: 'red' }}>Cancel</Button>
-          <Link to="/Task" onClick={handleCloseModal} sx={{ color: 'green' }}>Add Task</Link>
-         
-        </DialogActions>
-      </Dialog>
+
+      
     </div>
     </div>
   );
