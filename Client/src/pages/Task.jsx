@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Home, Task as TaskIcon, ExitToApp, Menu, Add } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import DarkModeToggle from '../components/DarkModeToggle';
 import AddTaskModal from '../pages/addList'; 
 
 function Task() {
+  const { currentUser } = useSelector((state) => state.user);
   const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false); // For the modal
@@ -26,10 +28,27 @@ function Task() {
               <h2 className="text-2xl font-bold">Taskify</h2>
               <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
             </div>
+
+            <div>
+            <div className='flex flex-col items-center mt-9'>
+ 
+  <img 
+    src={currentUser.avatar}  
+    alt="User Avatar" 
+    className="w-20 h-20 rounded-full mb-3" 
+  />
+   <h2 className="text-xl font-semibold">{currentUser.username}</h2> 
+</div>
+
+            </div>
             <div className='flex flex-col mt-9'>
               <Link to="/" className={`flex items-center space-x-2 hover:bg-gray-700 p-2 rounded ${darkMode ? 'text-white hover:bg-gray-600' : 'text-black'}`}>
                 <Home />
                 <span>All Tasks</span>
+              </Link>
+              <Link to="/task" className={`flex items-center space-x-2 hover:bg-gray-700 p-2 rounded mt-6 ${darkMode ? 'text-white hover:bg-gray-600' : 'text-black'}`}>
+                <TaskIcon />
+                <span>Task</span>
               </Link>
 
               <Link to="/pending" className={`flex items-center space-x-2 hover:bg-gray-700 p-2 rounded mt-6 ${darkMode ? 'text-white hover:bg-gray-600' : 'text-black'}`}>

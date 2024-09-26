@@ -36,7 +36,7 @@ export default function AddTask() {
         const result = await response.json();
         alert('Task added successfully');
         console.log(result);
-        handleClose(); // Close the modal on successful submission
+        handleClose(); 
       } else {
         console.log('Failed to add task');
       }

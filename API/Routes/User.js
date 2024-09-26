@@ -12,4 +12,3 @@ router.get('/signOut', signOut);
 module.exports = router;
 //
 router.post('/create',verifyToken,taskListing);
-router.get('/getlisting/:id', getListing)
