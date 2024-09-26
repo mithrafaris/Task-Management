@@ -3,6 +3,9 @@ import UserLogin from '../pages/signIn';
 import SignUp from '../pages/signUp';  
 import Home from "../pages/Home";
 import Task from "../pages/Task";
+import PrivateRoute from '../components/PrivateRoute';
+import PageNotFound from '../components/PageError';
+import TaskCard from "../pages/Taskcard";
 
 
 
@@ -21,8 +24,21 @@ const Router = createBrowserRouter([
   },
  {
   path:"/Task",
-  element:<Task/>
- }
+  element: <PrivateRoute />,
+  children: [
+    {
+      path: "",
+      element: <Task />
+    }
+  ]
+ },{
+  path: "/*",
+  element: <PageNotFound />,
+},
+{
+  path:"/taskcard",
+  element:<TaskCard/>
+}
  
 
 ]);
