@@ -3,7 +3,8 @@ const path = require('path');
 const dotenv = require('dotenv');
 const connectDB = require('./Database/connection');
 const cookieParser = require('cookie-parser');
-const userRoute = require('./Routes/User');
+const Route = require('./Routes/API');
+
 
 dotenv.config({ path: path.join(__dirname, '.env') });
 const app = express();
@@ -11,9 +12,13 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+
+
 connectDB();
 //routes
-app.use('/user', userRoute);
+app.use('/API',Route);
+
+app
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

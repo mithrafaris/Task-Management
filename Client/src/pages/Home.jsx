@@ -5,6 +5,7 @@ import Tasky from '../assets/tasky.png';
 
 
 
+
 export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
  
@@ -72,7 +73,6 @@ export default function Home() {
      
 
 
-      
     </div>
     </div>
   );

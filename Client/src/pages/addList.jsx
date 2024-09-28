@@ -24,7 +24,7 @@ export default function AddTask() {
     e.preventDefault();
 
     try {
-      const response = await fetch('/user/create', {
+      const response = await fetch('/API/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -96,19 +96,7 @@ export default function AddTask() {
                 required
               />
             </div>
-            <div>
-              <label className="block text-sm font-semibold mb-1" htmlFor="status">Status</label>
-              <select
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-900 rounded-md"
-              >
-                <option value="pending">Pending</option>
-                <option value="progress">In Progress</option>
-                <option value="completed">Completed</option>
-              </select>
-            </div>
+            
             <div>
               <label className="block text-sm font-semibold mb-1" htmlFor="userRef">Date</label>
               <input

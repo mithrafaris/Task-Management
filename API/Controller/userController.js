@@ -2,6 +2,7 @@ const User = require('../models/usermodel');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { errorHandler } = require('../utils/error');
+const Task = require('../models/taskModel');
 
 // User Signup
 exports.signUp = async (req, res, next) => {
@@ -59,3 +60,7 @@ exports.signOut =async(req,res,next)=>{
     next(error);
   }
 }
+
+
+
+
