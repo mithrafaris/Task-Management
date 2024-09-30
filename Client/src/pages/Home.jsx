@@ -56,7 +56,7 @@ export default function Home() {
               <span
                 className="inline-flex text-white items-center px-6 py-3 font-medium hover:opacity-75"
               >
-                &nbsp;  Let's Start
+                &nbsp; 
               </span>
             </div>
           </div>

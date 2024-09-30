@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
-import { Modal, Box, Button, Typography } from '@mui/material';
+import { Modal, Box, Button, Typography, MenuItem, Select } from '@mui/material';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function AddTask() {
+  const { currentUser } = useSelector((state) => state.user);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate(); 
+  const [usersTask, setUserTask] = useState([]);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -11,7 +19,15 @@ export default function AddTask() {
   });
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setFormData({
+      title: '',
+      description: '',
+      status: 'pending',
+      date: '',
+    });
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -22,39 +38,51 @@ export default function AddTask() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await fetch('/API/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          userRef: currentUser._id,
+        }),
       });
 
       if (response.ok) {
-        const result = await response.json();
-        alert('Task added successfully');
-        console.log(result);
-        handleClose(); 
+        const data = await response.json(); 
+        toast.success('Task added successfully!', {
+          position: 'top-right',
+          autoClose: 3000,
+        });
+        navigate('/Task'); 
+        handleClose();
       } else {
-        console.log('Failed to add task');
+        toast.error('Failed to add task.', {
+          position: 'top-right',
+          autoClose: 3000,
+        });
       }
+      
     } catch (error) {
-      console.error('Error adding task:', error);
+      toast.error('Error adding task.', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
     }
-  };
+ };
 
   return (
     <div>
-    <Button
-    variant="contained"
-    sx={{ backgroundColor: 'orangered', color: 'white' }}
-    onClick={handleOpen}
-  >
-    Add New Task
-  </Button>
-  
+      <Button
+        variant="contained"
+        sx={{ backgroundColor: 'orangered', color: 'white' }}
+        onClick={handleOpen}
+      >
+        Add New Task
+      </Button>
+
       <Modal open={open} onClose={handleClose}>
         <Box
           className="bg-black p-4 rounded-md shadow-md"
@@ -75,7 +103,9 @@ export default function AddTask() {
           </Typography>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-semibold mb-1" htmlFor="title">Task Title</label>
+              <label className="block text-sm font-semibold mb-1" htmlFor="title">
+                Task Title
+              </label>
               <input
                 type="text"
                 name="title"
@@ -86,7 +116,9 @@ export default function AddTask() {
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold mb-1" htmlFor="description">Description</label>
+              <label className="block text-sm font-semibold mb-1" htmlFor="description">
+                Description
+              </label>
               <textarea
                 name="description"
                 value={formData.description}
@@ -96,9 +128,26 @@ export default function AddTask() {
                 required
               />
             </div>
-            
             <div>
-              <label className="block text-sm font-semibold mb-1" htmlFor="userRef">Date</label>
+              <label className="block text-sm font-semibold mb-1" htmlFor="status">
+                Status
+              </label>
+              <Select
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                fullWidth
+                displayEmpty
+                required
+              >
+                <MenuItem value="pending">Pending</MenuItem>
+                
+              </Select>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold mb-1" htmlFor="date">
+                Date
+              </label>
               <input
                 type="date"
                 name="date"
@@ -120,6 +169,8 @@ export default function AddTask() {
           </form>
         </Box>
       </Modal>
+
+      <ToastContainer />
     </div>
   );
 }

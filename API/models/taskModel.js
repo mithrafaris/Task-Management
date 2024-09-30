@@ -12,11 +12,11 @@ const TaskSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "important", "completed"],
+    enum: ["pending","completed"],
     default: "pending",
   },
   date:{
-    type: Date,
+    type: String,
     required: true,
   },
   userRef: {

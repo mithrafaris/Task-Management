@@ -35,8 +35,6 @@ exports.signIn = async (req, res, next) => {
     next(error);
   }
 };
-
-// Delete User Function
 exports.deleteUser = async (req, res, next) => {
   try {
     if (!req.user || req.user.id !== req.params.id) {
@@ -58,6 +56,18 @@ exports.signOut =async(req,res,next)=>{
     res.status(200).json('User has been signed out');
   } catch (error) {
     next(error);
+  }
+}
+exports.getUserTasks=async(req,res,next) => {
+  if(req.user.id === req.params.id){
+    try {
+      const tasks = await Task.find({userRef:req.params.id})
+      res.status(200).json(tasks)
+    } catch (error) {
+      next(error)
+    }
+  }else{
+    return next(errorHandler(401,'you can only view your own listings!'))
   }
 }
 
