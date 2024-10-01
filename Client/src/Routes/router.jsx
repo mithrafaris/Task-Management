@@ -6,7 +6,7 @@ import Task from "../pages/Task";
 import PrivateRoute from '../components/PrivateRoute';
 import PageNotFound from '../components/PageError';
 import TaskList from "../pages/list-Task";
-import EditTask from "../pages/editTask"; // Make sure the import is correctly cased
+
 
 const Router = createBrowserRouter([           
   {
@@ -38,16 +38,6 @@ const Router = createBrowserRouter([
       {
         path: '',
         element: <TaskList />
-      }
-    ]
-  },
-  {
-    path: "/editTask/:taskId",
-    element: <PrivateRoute />,
-    children: [
-      {
-        path: '',
-        element: <EditTask /> 
       }
     ]
   },

@@ -10,14 +10,13 @@ export default function AddTask() {
   const { currentUser } = useSelector((state) => state.user);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate(); 
-  const [usersTask, setUserTask] = useState([]);
+  const [usersTask, setUserTask] = useState('');
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     status: 'pending',
     date: '',
   });
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);

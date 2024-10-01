@@ -13,12 +13,12 @@ function Task() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [showMore, setShowMore] = useState(false);
   const [usersTask, setUserTask] = useState([]);
+  const [visibleTasks, setVisibleTasks] = useState(6);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
-  
+
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
@@ -39,14 +39,13 @@ function Task() {
       toast.error('Failed to sign out');
     }
   };
-
   const handleUserTask = async () => {
     try {
-      setLoading(true);  
+      setLoading(true);
       const res = await fetch(`/API/tasks/${currentUser._id}`);
       const data = await res.json();
-      setUserTask(data);  
-      setLoading(false);  
+      setUserTask(data);
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching tasks:', error);
       setLoading(false);
@@ -54,13 +53,16 @@ function Task() {
   };
 
   const onShowMoreClick = () => {
-    // Logic for showing more tasks if needed
-    setShowMore(true);
-  };
+    setVisibleTasks((prevVisible) => prevVisible + 6);
+  }
 
   useEffect(() => {
-   handleUserTask(); 
+    handleUserTask();
   }, []);
+
+  
+
+  const sortedTasks = usersTask.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   return (
     <div className={`min-h-screen flex ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
@@ -77,37 +79,22 @@ function Task() {
               <h2 className="text-xl font-semibold">{currentUser.username}</h2>
             </div>
             <div className="flex flex-col mt-9 space-y-14">
-              {/* Sidebar Links with Routes */}
-              <Link
-                to="/tasks/all"
-                className={`flex items-center space-x-2 p-2 rounded transition-all ${darkMode ? 'hover:bg-gray-700 text-white' : 'hover:bg-gray-100 text-black'}`}
-              >
-                <TaskIcon />
-                <span>ALL TASKS</span>
-              </Link>
+             
               <Link
                 onClick={handleUserTask}
                 className={`flex items-center space-x-2 p-2 rounded transition-all ${darkMode ? 'hover:bg-gray-700 text-white' : 'hover:bg-gray-100 text-black'}`}
               >
                 <TaskIcon />
-                <span>USER TASKS</span>
+                <span>TASKS</span>
               </Link>
               <Link
-                to="/tasks/pending"
-                className={`flex items-center space-x-2 p-2 rounded transition-all ${darkMode ? 'hover:bg-gray-700 text-white' : 'hover:bg-gray-100 text-black'}`}
-              >
-                <TaskIcon />
-                <span>PENDING TASKS</span>
-              </Link>
-              <Link
-                to="/tasks/completed"
-                className={`flex items-center space-x-2 p-2 rounded transition-all ${darkMode ? 'hover:bg-gray-700 text-white' : 'hover:bg-gray-100 text-black'}`}
-              >
-                <TaskIcon />
-                <span>COMPLETED TASKS</span>
-              </Link>
-
-              {/* Sign Out Button */}
+              to="/allTask"
+              className={`flex items-center space-x-2 p-2 rounded transition-all ${darkMode ? 'hover:bg-gray-700 text-white' : 'hover:bg-gray-100 text-black'}`}
+            >
+              <TaskIcon />
+              <span>ALL TASKS</span>
+            </Link>
+            
               <Link onClick={handleSignOut} className={`flex items-center space-x-2 p-2 rounded transition-all mt-12 cursor-pointer ${darkMode ? 'hover:bg-gray-700 text-white' : 'hover:bg-gray-100 text-black'}`}>
                 <ExitToApp />
                 <span>Sign Out</span>
@@ -129,18 +116,18 @@ function Task() {
 
         <div className="flex-1">
           <h1 className="text-3xl font-semibold border-b p-2 text-slate-700 mt-5 dark:text-blue-900">Task List:</h1>
-          <div className="p-7 flex flex-wrap gap-3">
+          <div className="p-4 flex flex-wrap gap-3">
             {loading ? (
               <p className="text-xl text-slate-700 text-center w-full dark:text-white">Loading...</p>
-            ) : usersTask && usersTask.length === 0 ? (
+            ) : sortedTasks.length === 0 ? (
               <p className="text-xl text-slate-700 dark:text-red-950">No tasks found!</p>
             ) : (
-              usersTask.map((task) => (
-                <ListingItem key={task._id} task={task} />  
+              sortedTasks.slice(0, visibleTasks).map((task) => (
+                <ListingItem key={task._id} task={task} />
               ))
             )}
 
-            {showMore && (
+            {sortedTasks.length > visibleTasks && (
               <button onClick={onShowMoreClick} className="text-blue-900 dark:text-blue-400 hover:underline p-7 text-center w-full">
                 Show more
               </button>
@@ -153,4 +140,3 @@ function Task() {
 }
 
 export default Task;
-  
