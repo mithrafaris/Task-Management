@@ -65,7 +65,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, darkMode, setDarkMode }) => {
             <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
           </div>
 
-          <div className="flex flex-col items-center mt-9">
+          <div className="flex flex-col items-center mt-2">
             <img
               src={currentUser.avatar}
               alt="User Avatar"

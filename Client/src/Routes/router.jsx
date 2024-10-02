@@ -7,6 +7,8 @@ import PrivateRoute from '../components/PrivateRoute';
 import PageNotFound from '../components/PageError';
 import TaskList from "../pages/list-Task";
 import AllTask from '../pages/allTask'
+import Chat from "../pages/chat";
+
 
 
 const Router = createBrowserRouter([           
@@ -45,6 +47,10 @@ const Router = createBrowserRouter([
         element: <TaskList />
       }
     ]
+  },
+  {
+    path:'/chat',
+    element:<Chat/>
   },
   {
     path: "/*",

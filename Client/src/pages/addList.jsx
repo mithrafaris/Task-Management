@@ -3,20 +3,19 @@ import { Modal, Box, Button, Typography, MenuItem, Select } from '@mui/material'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function AddTask() {
   const { currentUser } = useSelector((state) => state.user);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate(); 
-  const [usersTask, setUserTask] = useState('');
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     status: 'pending',
     date: '',
   });
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
@@ -55,32 +54,41 @@ export default function AddTask() {
           position: 'top-right',
           autoClose: 3000,
         });
-        navigate('/Task'); 
-        handleClose();
+        handleClose();  // Reset the form after task is added
+        navigate('/Task');  // Navigate after the form is closed
       } else {
         toast.error('Failed to add task.', {
           position: 'top-right',
           autoClose: 3000,
         });
       }
-      
     } catch (error) {
       toast.error('Error adding task.', {
         position: 'top-right',
         autoClose: 3000,
       });
     }
- };
+  };
 
   return (
     <div>
-      <Button
-        variant="contained"
-        sx={{ backgroundColor: 'orangered', color: 'white' }}
-        onClick={handleOpen}
-      >
-        Add New Task
-      </Button>
+      <div className='flex gap-2'>
+        <Button 
+          component={Link} to="/chat"  // Correctly navigate to chat
+          variant="contained"
+          sx={{ backgroundColor: 'maroon', color: 'white' }}
+        >
+          Let's Chat
+        </Button>
+
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: 'orangered', color: 'white' }}
+          onClick={handleOpen}
+        >
+          Add New Task
+        </Button>
+      </div>
 
       <Modal open={open} onClose={handleClose}>
         <Box
@@ -140,7 +148,6 @@ export default function AddTask() {
                 required
               >
                 <MenuItem value="pending">Pending</MenuItem>
-                
               </Select>
             </div>
             <div>
