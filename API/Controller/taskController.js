@@ -57,10 +57,19 @@ exports.GetTask = async (req, res, next) => {
 };
 exports.getAllTasks = async (req, res, next) => {
   try {
-    const tasks = await Task.find().sort({ createdAt: 1 });
-    res.status(200).json(tasks);
+    const { status } = req.query; 
+    let filter = {};
+    if (status) {
+      filter.status = status; 
+    }
+    const tasks = await Task.find(filter); 
+    res.status(200).json({ success: true, tasks });
   } catch (error) {
-    next(error);
+    next(errorHandler(500, 'Failed to retrieve tasks'));
   }
 };
+
+
+
+
 

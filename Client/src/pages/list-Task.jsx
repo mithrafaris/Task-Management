@@ -135,7 +135,7 @@ function ListingItem({ task }) {
                   className="w-full p-2 bg-gray-800 text-white rounded"
                   type="date"
                   name="date"
-                  value={formData.date}
+                  value={new Date(formData.date).toLocaleDateString()}
                   onChange={handleChange}
                   required
                 />

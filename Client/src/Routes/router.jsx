@@ -6,6 +6,7 @@ import Task from "../pages/Task";
 import PrivateRoute from '../components/PrivateRoute';
 import PageNotFound from '../components/PageError';
 import TaskList from "../pages/list-Task";
+import AllTask from '../pages/allTask'
 
 
 const Router = createBrowserRouter([           
@@ -20,6 +21,10 @@ const Router = createBrowserRouter([
   {
     path: "/",
     element: <Home />
+  },
+  {
+    path:'/allTask',
+    element:<AllTask />
   },
   {
     path: "/task",

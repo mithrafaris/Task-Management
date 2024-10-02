@@ -13,11 +13,12 @@ router.get('/signOut', signOut);
 router.get('/tasks/:id',verifyToken,getUserTasks)
 
 router.post('/create', verifyToken, CreateTask);
+router.get('/usertasks',getAllTasks)
 router.delete('/delete/:id',verifyToken,DeleteTask);
 router.post('/update/:id',verifyToken,UpdateTask);
 router.get('/getTask/:id',GetTask);
 router.post('/updateTask/:id',verifyToken,UpdateTask);
-router.get('/getAllTasks',getAllTasks)
+
 
 
 
