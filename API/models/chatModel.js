@@ -1,35 +1,24 @@
 const mongoose = require("mongoose");
+const User = require("./usermodel");
+const Message = require("./messagemodel");
 
 const chatSchema = new mongoose.Schema(
   {
-    photo: {
-      type: String,
-      default: 'https://cdn-icons-png.flaticon.com/512/9790/9790561.png',
-    },
-    chatName: {
-      type: String,
-    },
-    isGroup: {
-      type: Boolean,
-      default: false,
-    },
-    users: [
+    participants: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: User,  // Use 'User' as a string reference
       },
     ],
-    latestMessage: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Message',
-    },
-    groupAdmin: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-    },
+    messages: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: Message, 
+      }
+    ],
   },
   {
-    timestamps: true,
+    timestamps: true, // Automatically adds createdAt and updatedAt fields
   }
 );
 

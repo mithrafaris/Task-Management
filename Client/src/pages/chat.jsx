@@ -13,9 +13,14 @@ const Chat = () => {
     { id: '3', title: 'Chat 3' },
   ];
 
+
+
+  
+
   const toggleDarkMode = () => {
     setDarkMode(prevMode => !prevMode);
   };
+  
 
   return (
     <div className={`flex h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>

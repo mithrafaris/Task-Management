@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-
+import CircularProgress from '@mui/material/CircularProgress';
 function ListingItem({ task }) {
   const { taskId } = useParams(); 
   const navigate = useNavigate();
@@ -86,7 +86,7 @@ function ListingItem({ task }) {
   };
 
   if (!task) {
-    return <div>Loading...</div>;
+    return <div><CircularProgress /></div>;
   }
 
   return (
