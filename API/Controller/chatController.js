@@ -21,6 +21,7 @@ exports.sendMessage = async (req, res, next) => {
       senderID,
       receiverID,
       message,
+      date: new Date(), 
     });
     await newMessage.save();
     conversation.messages.push(newMessage._id); 
@@ -33,12 +34,12 @@ exports.sendMessage = async (req, res, next) => {
 exports.getMessage = async (req, res, next) => {
   try {
     const { id: chatUser } = req.params;
-    const senderID = req.user.id; // Use _id for MongoDB reference
+    const senderID = req.user.id; 
 
-    // Find the conversation between sender and chatUser
+    
     const conversation = await Chat.findOne({
-      participants: { $all: [senderID, chatUser] }, // Corrected to participants
-    }).populate("messages"); // Populate messages instead of message
+      participants: { $all: [senderID, chatUser] }, 
+    }).populate("messages"); 
 
     // Check if the conversation exists
     if (!conversation) {

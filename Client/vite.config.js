@@ -7,6 +7,7 @@ export default defineConfig({
       '/API': {
         target: 'http://localhost:3001/',
         secure: false,
+        ws: true
       }
     }
   },

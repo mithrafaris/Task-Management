@@ -4,6 +4,9 @@ const initialState = {
   currentUser: null,
   error: null,
   loading: false,
+  messages: [],
+  chatLoading: false, 
+  chatError: null, 
 };
 
 const userSlice = createSlice({
@@ -58,7 +61,31 @@ const userSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
-  },
+    sendMessageStart: (state) => {
+      state.chatLoading = true; 
+      state.error = null;
+    },
+    sendMessageSuccess: (state, action) => {
+      state.messages.push(action.payload);
+      state.chatLoading = false;
+    },
+    sendMessageFailure: (state, action) => {
+      state.chatError = action.payload;
+      state.chatLoading = false; 
+    },
+    getMessageStart: (state) => {
+      state.chatLoading = true; 
+      state.chatError = null; 
+    },
+    getMessageSuccess: (state, action) => {
+      state.messages = action.payload;
+      state.chatLoading = false; 
+    },
+    getMessageFailure: (state, action) => {
+      state.chatError = action.payload; 
+      state.chatLoading= false;
+    }
+  }
 });
 
 export const {
@@ -74,6 +101,12 @@ export const {
   signOutUserStart,
   signOutUserSuccess,
   signOutUserFailure,
+  sendMessageStart,
+  sendMessageSuccess,
+  sendMessageFailure,
+  getMessageStart,
+  getMessageSuccess,
+  getMessageFailure,
 } = userSlice.actions;
 
 export default userSlice.reducer;
