@@ -6,55 +6,57 @@ const cookieParser = require('cookie-parser');
 const Route = require('./Routes/API');
 const http = require('http');
 const { Server } = require('socket.io'); 
-const path = require('path');
+const cors = require('cors');
 
 dotenv.config({ path: path.join(__dirname, '.env') });
-
 
 const app = express();
 const server = http.createServer(app);
 
-// Set up Socket.IO server with CORS settings
 const io = new Server(server, {
   cors: {
-    origin:"http://localhost:5173",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true
   }
 });
-const __dirname = path.resolve()
+
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 connectDB();
-const cors = require('cors');
+
+// Enable CORS globally
 app.use(cors()); 
 
+// Routes
 app.use('/API', Route);
 
-
+// WebSocket connection handling
 io.on('connection', (socket) => {
   console.log('A user connected');
-
 
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg); 
   });
 
- 
   socket.on('disconnect', () => {
     console.log('User disconnected');
   });
 });
 
-app.use(express.static(path.join(__dirname,'/Client/dist' )))
+// Serve static files from the 'dist' folder
+app.use(express.static(path.join(__dirname, 'Client/dist')));
+
+// Handle SPA routing (for React, Vue, etc.)
 app.get('*', (req, res) => {
-res.sendFile(path.join(__dirname,'Client','dist','index.html'))
-})
+  res.sendFile(path.join(__dirname, 'Client', 'dist', 'index.html'));
+});
 
-
+// Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
   const statusCode = err.statusCode || 500;
@@ -66,7 +68,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-
+// Start the server
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
