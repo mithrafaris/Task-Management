@@ -32,7 +32,10 @@ connectDB();
 // Enable CORS globally
 app.use(cors()); 
 
-// Routes
+// Serve static files from the 'build' folder (adjust if necessary)
+app.use(express.static(path.join(__dirname, 'Client', 'build'))); // Use 'build' if that is your output directory
+
+// Handle API routes
 app.use('/API', Route);
 
 // WebSocket connection handling
@@ -48,14 +51,10 @@ io.on('connection', (socket) => {
   });
 });
 
-// Serve static files from the 'dist' folder
-app.use(express.static(path.join(__dirname, 'Client/dist')));
-
 // Handle SPA routing (for React, Vue, etc.)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'Client', 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'Client', 'build', 'index.html')); // Change to 'build' if that is your output directory
 });
-console.log("Serving static files from:", path.join(__dirname, "Client", "build"));
 
 // Global error handler
 app.use((err, req, res, next) => {
