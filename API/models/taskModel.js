@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const TaskSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -12,16 +11,17 @@ const TaskSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["pending","completed"],
+    enum: ["pending", "completed"],
     default: "pending",
   },
-  date:{
-    type: String,
+  date: {
+    type: Date,  // Change to Date type
     required: true,
   },
   userRef: {
-    type: String,
-    required: true
+    type: mongoose.Schema.Types.ObjectId, // Use ObjectId for user reference
+    ref: "User", // Reference to the User model
+    required: true,
   }
 }, { timestamps: true });
 

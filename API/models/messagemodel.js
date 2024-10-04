@@ -1,20 +1,19 @@
 const mongoose = require("mongoose");
-const User = require("./usermodel");
 
 const MessageSchema = new mongoose.Schema({
   senderID: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: User, 
-    required: true, 
+    ref: "User",  // Use 'User' as a string reference
+    required: true,
   },
   receiverID: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: User,  
-    required: true, 
+    ref: "User",  // Use 'User' as a string reference
+    required: true,
   },
-  message: {  
+  message: {
     type: String,
-    maxlength: 1000, 
+    maxlength: 1000,
     trim: true,
     required: true,
     validate: [
@@ -30,10 +29,10 @@ const MessageSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now, 
+    default: Date.now,
   },
 }, {
-  timestamps: true, 
+  timestamps: true, // Automatically adds createdAt and updatedAt fields
 });
 
 const Message = mongoose.model("Message", MessageSchema);
