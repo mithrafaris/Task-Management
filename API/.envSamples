@@ -1,0 +1,4 @@
+PORT=3001
+MONGO_URL=mongodb+srv://mithrafaris31:mithrakm@cluster0.wgpn7.mongodb.net/
+
+JWT_SECRET_KEY='Sm8ja43i0wswaLFhs8lwi9et6mMAeU9ei2adjL4hlRk0r4At5t8rkINdaeu7r4unS'
