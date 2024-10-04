@@ -37,7 +37,7 @@ app.use('/API', Route);
 
 // WebSocket connection handling
 io.on('connection', (socket) => {
-  console.log('A user connected');
+  console.log('user connected to socket');
 
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg); 
@@ -55,6 +55,7 @@ app.use(express.static(path.join(__dirname, 'Client/dist')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'Client', 'dist', 'index.html'));
 });
+console.log("Serving static files from:", path.join(__dirname, "Client", "build"));
 
 // Global error handler
 app.use((err, req, res, next) => {
