@@ -73,14 +73,6 @@ export default function AddTask() {
   return (
     <div>
       <div className='flex gap-2'>
-        <Button 
-          component={Link} to="/chat"  // Correctly navigate to chat
-          variant="contained"
-          sx={{ backgroundColor: 'maroon', color: 'white' }}
-        >
-          Let's Chat
-        </Button>
-
         <Button
           variant="contained"
           sx={{ backgroundColor: 'orangered', color: 'white' }}
