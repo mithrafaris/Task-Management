@@ -64,8 +64,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, darkMode, setDarkMode }) => {
             <h2 className="text-2xl font-bold">Taskify</h2>
             <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
           </div>
-
-          <div className="flex flex-col items-center mt-2">
+ <div className="flex flex-col items-center mt-2">
             <img
               src={currentUser.avatar}
               alt="User Avatar"
@@ -73,8 +72,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, darkMode, setDarkMode }) => {
             />
             <h2 className="text-xl font-semibold">{currentUser.username}</h2>
           </div>
-
-          <div className="flex flex-col mt-9 space-y-4">
+ <div className="flex flex-col mt-9 space-y-4">
            
             <Link to="/tasks"  className={`flex items-center space-x-2 p-2 rounded transition-all ${darkMode ? 'hover:bg-gray-800 text-white' : 'hover:bg-gray-100 text-black'}`}>
               <TaskIcon />

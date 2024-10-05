@@ -18,7 +18,7 @@ function OAuth() {
       const res = await fetch('/API/google', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type':'application/json'
         },
         body: JSON.stringify({
           name: result.user.displayName,
