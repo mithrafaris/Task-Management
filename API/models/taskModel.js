@@ -15,12 +15,12 @@ const TaskSchema = new mongoose.Schema({
     default: "pending",
   },
   date: {
-    type: Date,  // Change to Date type
+    type: Date,  
     required: true,
   },
   userRef: {
-    type: mongoose.Schema.Types.ObjectId, // Use ObjectId for user reference
-    ref: "User", // Reference to the User model
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "User", 
     required: true,
   }
 }, { timestamps: true });

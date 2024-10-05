@@ -22,23 +22,23 @@ const io = new Server(server, {
   }
 });
 
-// Middleware
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 connectDB();
 
-// Enable CORS globally
+
 app.use(cors()); 
 
-// Serve static files from the 'build' folder (adjust if necessary)
-app.use(express.static(path.join(__dirname, 'Client', 'build'))); // Use 'build' if that is your output directory
 
-// Handle API routes
+app.use(express.static(path.join(__dirname, 'Client', 'build'))); 
+
+
 app.use('/API', Route);
 
-// WebSocket connection handling
+
 io.on('connection', (socket) => {
   console.log('user connected to socket');
 
@@ -51,12 +51,11 @@ io.on('connection', (socket) => {
   });
 });
 
-// Handle SPA routing (for React, Vue, etc.)
+
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'Client', 'build', 'index.html')); // Change to 'build' if that is your output directory
+  res.sendFile(path.join(__dirname, 'Client', 'build', 'index.html')); // 
 });
 
-// Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
   const statusCode = err.statusCode || 500;
@@ -68,7 +67,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start the server
+
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

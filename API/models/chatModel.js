@@ -6,18 +6,18 @@ const chatSchema = new mongoose.Schema(
     participants: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",  // Use 'User' as a string reference
+        ref: "User",  
       },
     ],
     messages: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Message",  // Use 'Message' as a string reference
+        ref: "Message", 
       }
     ],
   },
   {
-    timestamps: true, // Automatically adds createdAt and updatedAt fields
+    timestamps: true, 
   }
 );
 
