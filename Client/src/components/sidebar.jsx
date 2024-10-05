@@ -90,8 +90,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, darkMode, setDarkMode }) => {
             <Link
               onClick={handleSignOut}
               className={`flex items-center space-x-2 p-2 rounded transition-all mt-12 cursor-pointer ${darkMode ? 'hover:bg-gray-800 text-white' : 'hover:bg-gray-100 text-black'}`}
-            >
-              <ExitToApp />
+            > <ExitToApp />
               <span>Sign Out</span>
             </Link>
           </div>
