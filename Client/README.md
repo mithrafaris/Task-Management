@@ -59,22 +59,26 @@ Make sure you have the following installed on your machine:
 
 2. Navigate to the server directory and install the backend dependencies:
 
-cd API
+```cd API
 npm install
-
+```
 3.Navigate to the client directory and install the frontend dependencies:
+```
 cd Client
 npm install
-
+```
 
 4Create a .env file in the API directory and add your MongoDB connection string and other environment variables. An example .env file:
 i have make sample files as envsamples or
 5. to start u can use
-npm run dev 
+```
+npm run dev
+```
 in both frondend and back end
 ### Customization
 
-- Replace `yourusername` in the clone command with your actual GitHub username.
-- Update the MongoDB connection string and any other necessary environment variables in the `.env` example.
+
 
 This `README.md` should give users a clear understanding of your project and how to get started. Let me know if you need any further adjustments or additional information!
+
+i am usind docker.io for first time
